@@ -8,7 +8,7 @@
             "name": "(gdb) 启动",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/project",
+            "program": "${workspaceFolder}/bin/project",
             "args": ["sundexxin"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

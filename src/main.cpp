@@ -1,14 +1,16 @@
 #include <iostream>
 #include <vector>
-#include "include/list.h"
-#include "include/datebase.h"
-#include "../libraries/Math/math.h"
+#include "list/list.h"
+#include "database/database.h"
+#include "math/math.h"
 
 using namespace std;
 
 //make时要输入用户名，否则else
 int main(int arg_count, char *args[])
 {
+    /*****************1 链表测试*********************/
+    /***
     List list;
     Database data;
 
@@ -21,9 +23,18 @@ int main(int arg_count, char *args[])
     }else{
         cout << "Username not supplied.. exiting the program" << endl;
     }
-
-    //Math cal;
-    //cal.add(3,4);
+    ***/
+   /***********************************************/
+    
+    /*****************2 数学库测试*****************/
+    /***/
+    Math cal;
+    int a,b;
+    cout << "pleale input a and b:" << "\n";
+    cin >> a >> b;
+    int sum = cal.add(a,b);
+    cout << "a + b = " << sum << "\n"; 
+    /***/
 
     return 0;
 }

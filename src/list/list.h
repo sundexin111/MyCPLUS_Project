@@ -1,3 +1,6 @@
+#ifndef __LIST_H__
+#define __LIST_H__
+
 #include <iostream>
 #include <vector>
 
@@ -19,7 +22,7 @@ public:
     bool find_userList();
     void save_list();
 
-    vector<vector<string>> mainList;
+    vector<vector<string> > mainList;
     vector<string> list;
     string name;
     int currentUserIndex;
@@ -27,3 +30,5 @@ public:
 protected:
 private:
 };
+
+#endif

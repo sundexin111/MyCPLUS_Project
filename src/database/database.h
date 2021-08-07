@@ -1,3 +1,6 @@
+#ifndef __DATABASE_H__
+#define __DATABASE_H__
+
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -13,11 +16,13 @@ public:
         //destructor
     }
 
-    void write(vector<vector<string>> mainList);
-    vector<vector<string>> read();
+    void write(vector<vector<string> > mainList);
+    vector<vector<string> > read();
 
-    vector<vector<string>> mainList;
+    vector<vector<string> > mainList;
     string name;
 protected:
 private:
 };
+
+#endif

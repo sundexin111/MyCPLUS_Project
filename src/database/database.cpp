@@ -1,6 +1,6 @@
-#include "include/datebase.h"
+#include "database.h"
 
-void Database::write(vector<vector<string>> mainList)
+void Database::write(vector<vector<string> > mainList)
 {
     ofstream db;
     db.open("db/lists.sl");
@@ -24,7 +24,7 @@ void Database::write(vector<vector<string>> mainList)
     db.close();
 }
 
-vector<vector<string>> Database::read()
+vector<vector<string> > Database::read()
 {
     string line;
     ifstream db;
