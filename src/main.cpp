@@ -2,6 +2,7 @@
 #include <vector>
 #include "include/list.h"
 #include "include/datebase.h"
+#include "../libraries/Math/math.h"
 
 using namespace std;
 
@@ -20,6 +21,9 @@ int main(int arg_count, char *args[])
     }else{
         cout << "Username not supplied.. exiting the program" << endl;
     }
+
+    //Math cal;
+    //cal.add(3,4);
 
     return 0;
 }
