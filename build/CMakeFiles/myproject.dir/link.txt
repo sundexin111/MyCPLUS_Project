@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++11 -g   CMakeFiles/myproject.dir/src/main.cpp.o  -o myproject -rdynamic libmyproject_shared.so -Wl,-rpath,/home/sundexin/c++/MyCPLUS_Project/build 
