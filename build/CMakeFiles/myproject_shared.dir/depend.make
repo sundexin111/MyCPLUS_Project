@@ -10,6 +10,9 @@ CMakeFiles/myproject_shared.dir/src/database/database.cpp.o: ../src/database/dat
 CMakeFiles/myproject_shared.dir/src/leetcode/leetcode.cpp.o: ../src/leetcode/leetcode.cpp
 CMakeFiles/myproject_shared.dir/src/leetcode/leetcode.cpp.o: ../src/leetcode/leetcode.h
 
+CMakeFiles/myproject_shared.dir/src/list/list.cpp.o: ../src/list/list.cpp
+CMakeFiles/myproject_shared.dir/src/list/list.cpp.o: ../src/list/list.h
+
 CMakeFiles/myproject_shared.dir/src/math/math.cpp.o: ../src/math/math.cpp
 CMakeFiles/myproject_shared.dir/src/math/math.cpp.o: ../src/math/math.h
 

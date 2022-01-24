@@ -12,7 +12,8 @@ set( CMAKE_BUILD_TYPE "Debug")
 
 #编译生成库文件
 add_library(myproject_shared SHARED src/baidu/baidu.cpp src/test/test.cpp src/math/math.cpp
-            src/database/database.cpp src/leetcode/leetcode.cpp src/thread/thread.cpp)
+            src/database/database.cpp src/leetcode/leetcode.cpp src/thread/thread.cpp
+            src/list/list.cpp)
 
 # 表示项目的执行程序
 add_executable(myproject src/main.cpp)

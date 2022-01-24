@@ -10,6 +10,9 @@ CMakeFiles/myproject_shared.dir/src/database/database.cpp.o
 CMakeFiles/myproject_shared.dir/src/leetcode/leetcode.cpp.o
  /home/sundexin/c++/MyCPLUS_Project/src/leetcode/leetcode.cpp
  /home/sundexin/c++/MyCPLUS_Project/src/leetcode/leetcode.h
+CMakeFiles/myproject_shared.dir/src/list/list.cpp.o
+ /home/sundexin/c++/MyCPLUS_Project/src/list/list.cpp
+ /home/sundexin/c++/MyCPLUS_Project/src/list/list.h
 CMakeFiles/myproject_shared.dir/src/math/math.cpp.o
  /home/sundexin/c++/MyCPLUS_Project/src/math/math.cpp
  /home/sundexin/c++/MyCPLUS_Project/src/math/math.h

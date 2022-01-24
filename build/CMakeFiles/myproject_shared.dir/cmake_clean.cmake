@@ -5,6 +5,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/myproject_shared.dir/src/database/database.cpp.o"
   "CMakeFiles/myproject_shared.dir/src/leetcode/leetcode.cpp.o"
   "CMakeFiles/myproject_shared.dir/src/thread/thread.cpp.o"
+  "CMakeFiles/myproject_shared.dir/src/list/list.cpp.o"
   "libmyproject_shared.pdb"
   "libmyproject_shared.so"
 )

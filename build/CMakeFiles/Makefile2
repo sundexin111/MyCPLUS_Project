@@ -76,7 +76,7 @@ all: CMakeFiles/myproject.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/myproject.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sundexin/c++/MyCPLUS_Project/build/CMakeFiles 9
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sundexin/c++/MyCPLUS_Project/build/CMakeFiles 10
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/myproject.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sundexin/c++/MyCPLUS_Project/build/CMakeFiles 0
 .PHONY : CMakeFiles/myproject.dir/rule
@@ -103,7 +103,7 @@ clean: CMakeFiles/myproject.dir/clean
 CMakeFiles/myproject_shared.dir/all:
 	$(MAKE) -f CMakeFiles/myproject_shared.dir/build.make CMakeFiles/myproject_shared.dir/depend
 	$(MAKE) -f CMakeFiles/myproject_shared.dir/build.make CMakeFiles/myproject_shared.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sundexin/c++/MyCPLUS_Project/build/CMakeFiles --progress-num=3,4,5,6,7,8,9 "Built target myproject_shared"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sundexin/c++/MyCPLUS_Project/build/CMakeFiles --progress-num=3,4,5,6,7,8,9,10 "Built target myproject_shared"
 .PHONY : CMakeFiles/myproject_shared.dir/all
 
 # Include target in all.
@@ -113,7 +113,7 @@ all: CMakeFiles/myproject_shared.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/myproject_shared.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sundexin/c++/MyCPLUS_Project/build/CMakeFiles 7
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sundexin/c++/MyCPLUS_Project/build/CMakeFiles 8
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/myproject_shared.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sundexin/c++/MyCPLUS_Project/build/CMakeFiles 0
 .PHONY : CMakeFiles/myproject_shared.dir/rule

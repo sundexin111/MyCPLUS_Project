@@ -485,7 +485,7 @@ string Leetcode::LeftRotateString1(string str, int n)
     return ret; 
 }
 
-string LeftRotateString2(string str, int n)
+string Leetcode::LeftRotateString2(string str, int n)
 {
     if(n > str.size()){
         return str;
@@ -493,10 +493,37 @@ string LeftRotateString2(string str, int n)
     return str.substr(n) + str.substr(0, n);
 }
 
+string Leetcode::findLongestWord(string s, vector<string>& dictionary)
+{
+    string ans;
+    for (string d:dictionary){
+        int j = 0;
+        for(int i = 0; i < s.size() && j < d.size(); i++){
+            if(d[j] == s[i]){
+                j++;
+            }
+        }
+        if(j == d.size()){
+            if(d.size() > ans.size()){
+                ans = d;
+            }else if(d.size() == ans.size()){
+                ans = d < ans?d:ans;
+            }
+        }
+    }
+    return ans;
+}
 /****************************************双指针**********************************************/
 
 
 /****************************************链表***********************************************/
+/*
+struct ListNode{
+    int value;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
+};
+*/
 
 /*******************************从尾到头打印链表********************************/
 /***题目描述
@@ -641,4 +668,321 @@ Leetcode::ListNode* Leetcode::FindKthToTail(ListNode* pHead, int k)
     return answer;
 }
 
+bool Leetcode::hasCycle(ListNode *head){
+    if(!head){
+            return false;
+        }
+        struct ListNode *ptr1, *ptr2 = head->next;
+        while(ptr1 && ptr2){
+            if(ptr1 == ptr2){
+                return true;
+            }
+            ptr1 = ptr1->next;
+            ptr2 = ptr2->next;
+            if(!ptr2) break;
+            ptr2 = ptr2->next;
+        }
+        return false;
+}
+
+Leetcode::ListNode* Leetcode::getIntersectionNode(ListNode *headA, ListNode *headB)
+{
+    
+    if(headA == nullptr || headB == nullptr){
+        return nullptr;
+    }
+    ListNode *pA = headA, *pB = headB;
+    while(pA != pB){
+        pA = pA == nullptr ? headB : pA->next;
+        pB = pB == nullptr ? headA : pB->next;
+    }
+    return pA;
+    
+   /*
+        unordered_set<ListNode *> visited;
+        ListNode *temp = headA;
+        while (temp != nullptr) {
+            visited.insert(temp);
+            temp = temp->next;
+        }
+        temp = headB;
+        while (temp != nullptr) {
+            if (visited.count(temp)) {
+                return temp;
+            }
+            temp = temp->next;
+        }
+        return nullptr;
+        */
+}
+
+void Leetcode::Lsort(ListNode *head)
+{
+    int x = 0, t;
+    Leetcode::ListNode *p, *tail, *next;//tail代表链表每次排序后未排序链表的最后一个节点
+    if(head == NULL){
+        return;
+    }
+    for(p=head; p->next!=NULL;p = p->next);
+    tail = p;
+    while(tail!=head){
+        for(p=head;p!=tail;p=p->next){
+            if(p->val > p->next->val){
+                t = p->val;
+                p->val = p->next->val;
+                p->next->val = t;
+            }
+            next = p;
+        }
+        tail = next;
+    }
+}
+
+//合并两个有序链表
+Leetcode::ListNode* Leetcode::mergeTwoLists(ListNode* list1, ListNode* list2)
+{
+    ListNode* preHead = new ListNode(-1);
+    ListNode* prev = preHead;
+    while(list1 != nullptr && list2 != nullptr){
+        if(list1->val < list2->val){
+            prev->next = list1;
+            list1 = list1->next;
+        }else{
+            prev->next = list2;
+            list2 = list2->next;
+        }
+        prev = prev->next;
+    } 
+    //合并后 l1 和 l2 最多只有一个还未被合并完，我们直接将链表末尾指向未合并完的链表即可
+    prev->next = list1 == nullptr ? list2 : list1;
+    return preHead->next;
+}
 /****************************************链表***********************************************/
+
+
+/****************************************树***********************************************/
+
+/*****************************重建二叉树****************************/
+/***题目描述
+ * 给定某二叉树的前序遍历和中序遍历，请重建出该二叉树并返回它的头结点。
+ * 例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，
+ * 则重建出如下图所示。
+***/
+/***提示:
+ * 1.0 <= pre.length <= 2000
+ * 2.vin.length == pre.length
+ * 3.-10000 <= pre[i], vin[i] <= 10000
+ * 4.pre 和 vin 均无重复元素
+ * 5.vin出现的元素均出现在 pre里
+ * 6.只需要返回根结点，系统会自动输出整颗树做答案对比
+***/
+/***示例
+ * 输入:[1,2,4,7,3,5,6,8],[4,7,2,1,5,3,8,6]
+ * 返回值:{1,2,3,4,#,5,6,#,7,#,#,8}
+ * 说明：返回根节点，系统会输出整颗二叉树对比结果 
+ * 输入:[1],[1]
+ * 返回值:{1}
+ * 输入:[1,2,3,4,5,6,7],[3,2,4,1,6,5,7]
+ * 返回值:{1,2,5,3,4,6,7}
+***/
+
+/****************************************树***********************************************/
+
+int Leetcode::findShortestSubArray(vector<int>& nums)
+{
+const int n = nums.size();
+        vector<int> cnt(50010), first(50010, -1);
+        pair<int, int> ans = {0, 0};
+        for(int i = 0; i < nums.size(); ++i){
+            cnt[nums[i]]++;
+            if(first[nums[i]] == -1) first[nums[i]] = i; // 第一次出现，做好标记
+            // 当出现更大度 或者 度相同但长度更短 则更新答案
+            if(cnt[nums[i]] > ans.first || (cnt[nums[i]] == ans.first && i - first[nums[i]] + 1 < ans.second)){
+                ans = {cnt[nums[i]], i - first[nums[i]] + 1}; // 更新更优答案
+            }
+        }
+        return ans.second;
+}
+
+void Leetcode::hash_test(int is_in)
+{
+    unordered_set <int> hash;
+    cout << "输入哈希表元素的个数：" ;
+    int hash_size;
+    cin >> hash_size;
+    cout <<endl;
+    for(int i = 0; i < hash_size; i++){
+        cout << "请输入第" << i+1 << "个数:";
+        int temp_input;
+        cin >> temp_input;
+        hash.insert(temp_input);
+    }
+
+    //检测某个数是否在哈希表中
+
+    if(hash.count(is_in)){
+        cout << is_in << "在哈希表中！" << endl;
+    }else{
+        cout << is_in << "不在哈希表中！"<< endl;
+    }
+
+
+    /*
+    for(int j = 0 ; j < hash.size(); j++){
+        cout << hash[j];
+    }
+    */
+    
+}
+
+Leetcode::ListNode* Leetcode::reverseList(ListNode* head)
+{
+    /*方法１－迭代＊／
+    ／＊
+    if(head == nullptr){
+        return nullptr;
+    }
+    ListNode *pre = nullptr;
+    ListNode *cur = head;
+    while(cur){
+        ListNode* next = cur->next;
+        cur->next = pre;
+        pre = cur;
+        cur = next;
+    }
+    return pre;
+    */
+
+   /*方法２－递归*/
+   if(!head || !head->next) {
+       return head; //链表为空或只有一个元素返回本身
+   }
+   ListNode* p = reverseList(head->next);
+   head->next->next = head;
+   head->next = nullptr;
+   return p;
+    
+}
+
+/*创建一棵树*/
+/*
+Leetcode::TreeNode*  Leetcode::CreateTree(TreeNode* root, int val)
+{
+    if(root == NULL){
+        root->val = val;
+        return root;
+    }
+    if(val < root->val){
+        root->left = CreateTree(root->left,val);
+    }else if(val > root->val){
+        root->right = CreateTree(root->right, val);
+    }
+    return root;
+}
+
+int Leetcode::maxDepth(TreeNode* root)
+{
+    //深度优先法
+    if(root == nullptr){
+        return 0;
+    }
+    return max(maxDepth(root->left),maxDepth(root->right)) + 1;
+}
+
+void Leetcode::CreateBiTree(BiTree &BT)
+{
+    vector<int> tree_array{3,9,0,0,20,15,0,0,7,0,0};
+    if(tree_array[++sub] == 0){
+        BT = NULL;
+    }else{
+        BT = new BiTreeNode; //新建结点
+        BT->data = tree_array[sub];
+        CreateBiTree(BT->lchild);//创建左子树
+        CreateBiTree(BT->rchild);//创建右子树
+    }
+}
+
+void Leetcode::PreTraverse(BiTree T)
+{
+    if(T){
+        cout << T->data << ' ';
+        PreTraverse(T->lchild);
+        PreTraverse(T->rchild);
+    }
+}
+
+void Leetcode:: houxubianli()
+{
+
+}
+*/
+
+
+/**********************************栈和队列*****************************************/
+
+/***用栈实现队列***/
+void MyQueue::in2out()
+{   
+    while(!inStack.empty()){
+        //将栈的数字顺序变一下
+        outStack.push(inStack.top());
+        //in到out中后in中的数据弹出
+        inStack.pop();
+    }
+}
+
+void MyQueue::push(int x)
+{
+    inStack.push(x);
+}
+
+int MyQueue::pop()
+{
+    if(outStack.empty()){
+        in2out();
+    }
+    int x = outStack.top();
+    outStack.pop();
+    return x;
+}
+
+int MyQueue::peek()
+{
+    if(outStack.empty()){
+        in2out();
+    };
+    return outStack.top();
+}
+
+bool MyQueue::empty()
+{
+    return outStack.top() && outStack.empty();
+}
+
+void MyStack::push(int x)
+{
+    queue2.push(x);
+        while (!queue1.empty()) {
+            queue2.push(queue1.front());
+            queue1.pop();
+        }
+        swap(queue1, queue2);
+}
+
+int MyStack::pop()
+{
+    int r = queue1.front();
+    queue1.pop();
+    return r;
+}
+
+int MyStack::top()
+{
+    int r = queue1.front();
+    return r;
+}
+
+bool MyStack::empty()
+{
+    return queue1.empty();
+}

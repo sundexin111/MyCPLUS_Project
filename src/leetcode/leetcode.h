@@ -61,6 +61,8 @@ public:
 
     string LeftRotateString1(string str, int n);
     string LeftRotateString2(string str, int n);
+    string findLongestWord(string s, vector<string>& dictionary);
+
     /****************************************双指针**********************************************/
 
    
@@ -90,7 +92,55 @@ public:
 
     ListNode* FindKthToTail(ListNode* pHead, int k);
 
+    bool hasCycle(ListNode *head);
+
+    //寻找两个链表的交点
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB);
+
+    //链表排序冒泡法
+    void Lsort(ListNode *head);
+
+    //合并两个有序链表
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2);
+
     /****************************************链表***********************************************/
+
+
+    int findShortestSubArray(vector<int>& nums);
+
+    void hash_test(int is_in);
+
+    /*反转链表*/
+    ListNode *reverseList(ListNode* head);
+
+    /****************************************树*******************************************/
+    struct TreeNode{
+        int val;
+        TreeNode *left;
+        TreeNode *right;
+        TreeNode() : val(0),left(nullptr),right(nullptr){}
+        TreeNode(int x) : val(x),left(nullptr),right(nullptr){}
+        TreeNode(int x, TreeNode *left, TreeNode *right)  : val(x),left(left),right(right){}
+    };
+
+    /*创建一个树*/
+    //TreeNode* CreateTree(TreeNode* root, int val);
+    /*求树的最大深度*/
+    typedef struct node//节点定义
+    {
+        struct node *lchild;
+        struct node *rchild;
+        int data;
+    }BiTreeNode, *BiTree;
+    int sub = -1;
+
+    void CreateBiTree(BiTree &BT); //创建树
+
+    void PreTraverse(BiTree T); //遍历树
+
+    int maxDepth(BiTree* root);
+
+    static void houxubianli();
 
 protected:
 
@@ -115,6 +165,42 @@ private:
     };
     */
 
+};
+
+/***************************栈和队列*************************/
+class MyQueue{
+public:
+    MyQueue(){};
+
+    void push(int x);
+
+    int pop();
+
+    int peek();
+
+    bool empty();
+
+private:
+    stack<int> inStack, outStack;
+
+    void in2out();
+
+};
+
+class MyStack{
+public:
+    MyStack(){}
+
+    void push(int x);
+
+    int pop(); 
+
+    int top();
+
+    bool empty();
+
+private:
+    queue<int> queue1, queue2;
 };
 
 #endif

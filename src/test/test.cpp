@@ -23,7 +23,19 @@ void Test::ptr_char()
 
 void Test::print()
 {
-    cout << x << "*" << y << "  " << "\n";
+    //cout << x << "*" << y << "  " << "\n";
+    cout << x << "\n";
+}
+
+void Test::print() const
+{
+    cout << y << "\n";
+}
+
+void Test::print1()
+{
+    cout << "count=" << count << endl;
+    cout << "aa=" << aa << endl;
 }
 
 void Test::test_ptr(void *data)
@@ -122,12 +134,43 @@ void Test::swap_str(char*a, char*b)
     b = temp;
 }
 
-void Test::printf_ac(){
+void Test::printf_ac()
+{
     char  ac[]="Hello World! C Program",*p;
     for(p=ac+6;p<ac+9;p++){
         printf("%c",*p);
     }
 }
+
+void Test::test_const()
+{
+    int a = 248, b = 4;
+    int const c = 21; //指c不能被重新赋值
+    const int *d = &a;//指d指向的值不能变
+    int *const e = &b;//指e指向的地址不能变
+    int const * const f = &a;//指f指向的地址不能变,它的值也不能变
+
+    //接下来检查赋值语法
+    //c = a; //c作为左值不能被修改
+    //*d = &b; //*d作为指不能变
+    d = &b;//d的地址可以改变
+    //e = &a;//指向的地址不可变.
+    *e = b;
+    //f = &b; //报错
+    //*f = b;//报错
+
+    const int ival = 1024;
+    const int &refVal = ival; //两者均为const对象
+    //int &ref2 = ival;//错误!不能使用非const引用指向const对象
+
+}
+
+ int Test::foo(int a ,int b)
+ {
+     if (b == 0) return 0;
+     if (b %2 == 0) return foo(a+a,b/2);
+     return foo(a+a,b/2)+a;    
+ }
 
 /*****************1
  *  链表测试*********************************/
@@ -218,4 +261,41 @@ void Test::printf_ac(){
    int b = (a = -1) ? 2 : 3; // a=-1非零为真，２
    int c = (a = 0) ? 2 : 3;//　a=0为假，３
    ***/
+/*
+template<typename T>
+T Compare<T>::max()
+{
+    return (x > y) ? x : y;
+}
+*/
+/*
+template<class T>
+void Stack<T>::init()
+{
+    tos = 0;
+}
+*/
+/*
+template<class T>
+void Stack<T>::push(T ob)
+{
+    if(tos == size){
+        cout << "Stack is full" << endl;
+        return;
+    }
+    stack[tos] = ob;
+    tos++;
+}
+
+template<class T>
+T Stack<T>::pop()
+{
+    if(tos == 0){
+        cout << "Stack is empty" << endl;
+        return 0;
+    }
+    tos--;
+    return stack[tos];
+}
+*/
 

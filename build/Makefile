@@ -217,6 +217,33 @@ src/leetcode/leetcode.cpp.s:
 	$(MAKE) -f CMakeFiles/myproject_shared.dir/build.make CMakeFiles/myproject_shared.dir/src/leetcode/leetcode.cpp.s
 .PHONY : src/leetcode/leetcode.cpp.s
 
+src/list/list.o: src/list/list.cpp.o
+
+.PHONY : src/list/list.o
+
+# target to build an object file
+src/list/list.cpp.o:
+	$(MAKE) -f CMakeFiles/myproject_shared.dir/build.make CMakeFiles/myproject_shared.dir/src/list/list.cpp.o
+.PHONY : src/list/list.cpp.o
+
+src/list/list.i: src/list/list.cpp.i
+
+.PHONY : src/list/list.i
+
+# target to preprocess a source file
+src/list/list.cpp.i:
+	$(MAKE) -f CMakeFiles/myproject_shared.dir/build.make CMakeFiles/myproject_shared.dir/src/list/list.cpp.i
+.PHONY : src/list/list.cpp.i
+
+src/list/list.s: src/list/list.cpp.s
+
+.PHONY : src/list/list.s
+
+# target to generate assembly for a file
+src/list/list.cpp.s:
+	$(MAKE) -f CMakeFiles/myproject_shared.dir/build.make CMakeFiles/myproject_shared.dir/src/list/list.cpp.s
+.PHONY : src/list/list.cpp.s
+
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -344,6 +371,9 @@ help:
 	@echo "... src/leetcode/leetcode.o"
 	@echo "... src/leetcode/leetcode.i"
 	@echo "... src/leetcode/leetcode.s"
+	@echo "... src/list/list.o"
+	@echo "... src/list/list.i"
+	@echo "... src/list/list.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
