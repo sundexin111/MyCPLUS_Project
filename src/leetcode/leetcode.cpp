@@ -88,6 +88,13 @@ int Leetcode::FirstNotRepeatingChar(string str)
     return -1;
 }
 
+void Leetcode::printArray(vector<int> array)
+{
+    for(int i = 0; i < array.size(); i++){
+        cout << array[i] << " ";
+    }
+    cout << endl;
+}
 /*****************************************数组***********************************************/
 
 
@@ -493,6 +500,25 @@ string Leetcode::LeftRotateString2(string str, int n)
     return str.substr(n) + str.substr(0, n);
 }
 
+//6:判断链表中是否存在环
+bool Leetcode::hasCycle(ListNode *head){
+    if(!head){
+            return false;
+        }
+        struct ListNode *ptr1, *ptr2 = head->next;
+        while(ptr1 && ptr2){
+            if(ptr1 == ptr2){
+                return true;
+            }
+            ptr1 = ptr1->next;
+            ptr2 = ptr2->next;
+            if(!ptr2) break;
+            ptr2 = ptr2->next;
+        }
+        return false;
+}
+
+//7:最长子序列
 string Leetcode::findLongestWord(string s, vector<string>& dictionary)
 {
     string ans;
@@ -517,55 +543,7 @@ string Leetcode::findLongestWord(string s, vector<string>& dictionary)
 
 
 /****************************************链表***********************************************/
-/*
-struct ListNode{
-    int value;
-    ListNode *next;
-    ListNode(int x) : val(x), next(NULL) {}
-};
-*/
-
-/*******************************从尾到头打印链表********************************/
-/***题目描述
- * 从尾到头反过来打印出每个结点的值。
- * input:1 2 3
- * output 3 2 1
-***/
-/***结题思路
- * 1 递归法
- * 使用递归先走到链表的末尾，再在回溯时将链表节点中的值加入到数组中。
- * 递归边界： head == NULL;
- * 递归阶段：一直传入head->next;
- * 回溯阶段：将值加入到数组；
-***/
-
-void Leetcode::recur(ListNode* head)
-{
-    if(head == NULL){//表示递归结束
-        return;
-    }
-    recur(head->next);
-    ans.push_back(head->val);//回溯将链表值加入到ans
-}
-
-vector<int> Leetcode::printListFromTailToHead(ListNode* head){
-    recur(head);
-    return ans;
-}
-
-vector<int> Leetcode::printListFromTailToHead1(ListNode* head)
-{
-    vector<int> value;
-    if(head != NULL){
-        value.insert(value.begin(), head->val);
-        if(head->next != NULL){
-            vector<int> tempVec = printListFromTailToHead1(head->next);
-            value.insert(value.begin(),tempVec.begin(),tempVec.end());
-        }
-    }
-    return value;
-}
-
+//基础：创建和打印链表
 Leetcode::ListNode* Leetcode::CreateList(int count)
 {
     ListNode* pNode; //未串联起的单个节点
@@ -602,15 +580,72 @@ void Leetcode::printList(ListNode* pHead)
     cout << endl;
 }
 
-void Leetcode::printArray(vector<int> array)
+//1:寻找两个链表的交点
+Leetcode::ListNode* Leetcode::getIntersectionNode(ListNode *headA, ListNode *headB)
 {
-    for(int i = 0; i < array.size(); i++){
-        cout << array[i] << " ";
+    
+    if(headA == nullptr || headB == nullptr){
+        return nullptr;
     }
-    cout << endl;
+    ListNode *pA = headA, *pB = headB;
+    while(pA != pB){
+        pA = pA == nullptr ? headB : pA->next;
+        pB = pB == nullptr ? headA : pB->next;
+    }
+    return pA;
 }
 
-/*****************************删除链表中的重复节点*****************************/
+//2:反转链表
+Leetcode::ListNode* Leetcode::reverseList(ListNode* head)
+{
+    /*方法１－迭代＊／
+    ／＊
+    if(head == nullptr){
+        return nullptr;
+    }
+    ListNode *pre = nullptr;
+    ListNode *cur = head;
+    while(cur){
+        ListNode* next = cur->next;
+        cur->next = pre;
+        pre = cur;
+        cur = next;
+    }
+    return pre;
+    */
+
+   /*方法２－递归*/
+   if(!head || !head->next) {
+       return head; //链表为空或只有一个元素返回本身
+   }
+   ListNode* p = reverseList(head->next);
+   head->next->next = head;
+   head->next = nullptr;
+   return p;
+    
+}
+
+//3:合并两个有序链表
+Leetcode::ListNode* Leetcode::mergeTwoLists(ListNode* list1, ListNode* list2)
+{
+    ListNode* preHead = new ListNode(-1);
+    ListNode* prev = preHead;
+    while(list1 != nullptr && list2 != nullptr){
+        if(list1->val < list2->val){
+            prev->next = list1;
+            list1 = list1->next;
+        }else{
+            prev->next = list2;
+            list2 = list2->next;
+        }
+        prev = prev->next;
+    } 
+    //合并后 l1 和 l2 最多只有一个还未被合并完，我们直接将链表末尾指向未合并完的链表即可
+    prev->next = list1 == nullptr ? list2 : list1;
+    return preHead->next;
+}
+
+/*****************************4:删除链表中的重复节点*****************************/
 /***题目描述
  * 在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，
  * 返回链表头指针。 例如，链表1->2->3->3->4->4->5 处理后为 1->2->5
@@ -642,7 +677,177 @@ Leetcode::ListNode* Leetcode::deleteDuplication(ListNode* pHead)
     return vhead->next;
 }
 
-/*****************************链表中倒数最后k个结点*****************************/
+//5:删除链表的倒数第n个节点
+Leetcode::ListNode* Leetcode::removeNthFromEnd(ListNode* head, int n)
+{
+    ListNode* dummy = new ListNode(0);
+    ListNode* first = head;
+    ListNode* second = dummy;
+    for(int i = 0; i < n; ++i){
+        first = first->next;
+    }
+    while(first){
+        first = first->next;
+        second = second->next;
+    }
+    second->next = second->next->next;
+    ListNode* ans = dummy->next;
+    delete dummy;
+    return ans;
+}
+
+//6:两两交换链表中的节点
+Leetcode::ListNode* Leetcode::swapPairs(ListNode* head)
+{
+    ListNode* dummyHead = new ListNode(0);
+    dummyHead->next = head;
+    ListNode* temp = dummyHead;
+    while(temp->next != nullptr && temp->next->next != nullptr){
+        ListNode* node1 = temp->next;
+        ListNode* node2 = temp->next->next;
+        temp->next = node2;
+        node1->next = node2->next;
+        node2->next = node1;
+        temp = node1;
+    }
+    return dummyHead->next;
+}
+
+//7:链表求和
+Leetcode::ListNode* Leetcode::addTwoNumbers(ListNode* l1, ListNode* l2)
+{
+    stack<int> s1, s2;
+    while(l1){
+        s1.push(l1->val);
+        l1=l1->next;
+    }
+    while(l2){
+        s2.push(l2->val);
+        l2=l2->next;
+    }
+    int carry = 0;
+    ListNode* ans = nullptr;
+    while(!s1.empty() or !s2.empty() or carry!=0){
+        int a = s1.empty() ? 0 : s1.top();
+        int b = s2.empty() ? 0 : s2.top();
+        if(!s1.empty()) s1.pop();
+        if(!s2.empty()) s2.pop();
+        int cur = a + b + carry;
+        carry  =cur / 10;
+        cur %= 10;
+        auto curnode = new ListNode(cur);
+        curnode->next = ans;
+        ans = curnode;
+    }
+    return ans;
+}
+
+//8:回文链表
+bool Leetcode::isPalindrome(ListNode* head)
+{
+    if(head == nullptr){
+        return true;
+    }
+    //找到前半部分链表的尾结点并反转后半部分链表
+    ListNode* firstHalfEnd = end0FirstHalf(head);
+    ListNode* secondHalfStart = reverseList(firstHalfEnd->next);
+
+    //判断是否回文
+    ListNode* p1 = head;
+    ListNode* p2 = secondHalfStart;
+    bool result = true;
+    while(result && p2 != nullptr){
+        if(p1->val != p2->val){
+            result = false;
+        }
+        p1 = p1->next;
+        p2 = p2->next;
+    }
+    //还原链表并返回结果
+    firstHalfEnd->next = reverseList(secondHalfStart);
+    return result;
+}
+Leetcode::ListNode* Leetcode::end0FirstHalf(ListNode* head)
+{
+    ListNode* fast = head;
+    ListNode* slow = head;
+    while(fast->next!=nullptr && fast->next->next != nullptr){
+        fast = fast->next->next;
+        slow = slow->next;
+    }
+    return slow;
+}
+
+//9:分隔链表
+vector<Leetcode::ListNode*> Leetcode::splitListToParts(ListNode* head, int k)
+{
+    int n = 0;
+    ListNode* temp = head;
+    while(temp != nullptr){
+        n++;
+        temp = temp->next;
+    }
+    int quotient = n/k, remainder = n%k;
+
+    //代表ｋ个空节点的数组
+    vector<ListNode*> parts(k,nullptr);
+    ListNode* curr = head;
+    for(int i = 0; i < k && curr != nullptr; i++){
+        parts[i] = curr;
+        int partSize = quotient + (i < remainder ? 1 : 0);
+        for(int j = 1; j < partSize; j++){
+            curr = curr->next;
+        }
+        ListNode* next = curr->next;
+        curr->next = nullptr;
+        curr = next;
+    }
+    return parts;
+}
+
+//10:奇偶链表
+Leetcode::ListNode* Leetcode::oddEvenList(ListNode* head)
+{
+    if(head == nullptr){
+        return head;
+    }
+    ListNode* evenHead = head->next;
+    ListNode* odd = head;//奇数节点
+    ListNode* even = evenHead;//偶数节点
+    while(even != nullptr && even->next != nullptr){
+        odd->next = even->next;
+        odd = odd->next;
+        even->next = odd->next;
+        even = even->next;
+    }
+    odd->next = evenHead;
+    return head;
+}
+
+//11:链表排序冒泡法
+void Leetcode::Lsort(ListNode *head)
+{
+    int x = 0, t;
+    Leetcode::ListNode *p, *tail, *next;//tail代表链表每次排序后未排序链表的最后一个节点
+    if(head == NULL){
+        return;
+    }
+    for(p=head; p->next!=NULL;p = p->next);
+    tail = p;
+    while(tail!=head){
+        for(p=head;p!=tail;p=p->next){
+            if(p->val > p->next->val){
+                t = p->val;
+                p->val = p->next->val;
+                p->next->val = t;
+            }
+            next = p;
+        }
+        tail = next;
+    }
+}
+
+/*****************************12:链表中倒数最后k个结点*****************************/
 /***题目描述
  * 输入一个链表，输出一个链表，该输出链表包含原链表中从倒数第k个结点至尾节点的全部节点。
  * 如果该链表长度小于k，请返回一个长度为 0 的链表。
@@ -668,94 +873,44 @@ Leetcode::ListNode* Leetcode::FindKthToTail(ListNode* pHead, int k)
     return answer;
 }
 
-bool Leetcode::hasCycle(ListNode *head){
-    if(!head){
-            return false;
-        }
-        struct ListNode *ptr1, *ptr2 = head->next;
-        while(ptr1 && ptr2){
-            if(ptr1 == ptr2){
-                return true;
-            }
-            ptr1 = ptr1->next;
-            ptr2 = ptr2->next;
-            if(!ptr2) break;
-            ptr2 = ptr2->next;
-        }
-        return false;
-}
-
-Leetcode::ListNode* Leetcode::getIntersectionNode(ListNode *headA, ListNode *headB)
+/*******************************13:从尾到头打印链表********************************/
+/***题目描述
+ * 从尾到头反过来打印出每个结点的值。
+ * input:1 2 3
+ * output 3 2 1
+***/
+/***结题思路
+ * 1 递归法
+ * 使用递归先走到链表的末尾，再在回溯时将链表节点中的值加入到数组中。
+ * 递归边界： head == NULL;
+ * 递归阶段：一直传入head->next;
+ * 回溯阶段：将值加入到数组；
+***/
+void Leetcode::recur(ListNode* head)
 {
-    
-    if(headA == nullptr || headB == nullptr){
-        return nullptr;
-    }
-    ListNode *pA = headA, *pB = headB;
-    while(pA != pB){
-        pA = pA == nullptr ? headB : pA->next;
-        pB = pB == nullptr ? headA : pB->next;
-    }
-    return pA;
-    
-   /*
-        unordered_set<ListNode *> visited;
-        ListNode *temp = headA;
-        while (temp != nullptr) {
-            visited.insert(temp);
-            temp = temp->next;
-        }
-        temp = headB;
-        while (temp != nullptr) {
-            if (visited.count(temp)) {
-                return temp;
-            }
-            temp = temp->next;
-        }
-        return nullptr;
-        */
-}
-
-void Leetcode::Lsort(ListNode *head)
-{
-    int x = 0, t;
-    Leetcode::ListNode *p, *tail, *next;//tail代表链表每次排序后未排序链表的最后一个节点
-    if(head == NULL){
+    if(head == NULL){//表示递归结束
         return;
     }
-    for(p=head; p->next!=NULL;p = p->next);
-    tail = p;
-    while(tail!=head){
-        for(p=head;p!=tail;p=p->next){
-            if(p->val > p->next->val){
-                t = p->val;
-                p->val = p->next->val;
-                p->next->val = t;
-            }
-            next = p;
-        }
-        tail = next;
-    }
+    recur(head->next);
+    ans.push_back(head->val);//回溯将链表值加入到ans
 }
 
-//合并两个有序链表
-Leetcode::ListNode* Leetcode::mergeTwoLists(ListNode* list1, ListNode* list2)
+vector<int> Leetcode::printListFromTailToHead(ListNode* head){
+    recur(head);
+    return ans;
+}
+
+vector<int> Leetcode::printListFromTailToHead1(ListNode* head)
 {
-    ListNode* preHead = new ListNode(-1);
-    ListNode* prev = preHead;
-    while(list1 != nullptr && list2 != nullptr){
-        if(list1->val < list2->val){
-            prev->next = list1;
-            list1 = list1->next;
-        }else{
-            prev->next = list2;
-            list2 = list2->next;
+    vector<int> value;
+    if(head != NULL){
+        value.insert(value.begin(), head->val);
+        if(head->next != NULL){
+            vector<int> tempVec = printListFromTailToHead1(head->next);
+            value.insert(value.begin(),tempVec.begin(),tempVec.end());
         }
-        prev = prev->next;
-    } 
-    //合并后 l1 和 l2 最多只有一个还未被合并完，我们直接将链表末尾指向未合并完的链表即可
-    prev->next = list1 == nullptr ? list2 : list1;
-    return preHead->next;
+    }
+    return value;
 }
 /****************************************链表***********************************************/
 
@@ -832,35 +987,6 @@ void Leetcode::hash_test(int is_in)
         cout << hash[j];
     }
     */
-    
-}
-
-Leetcode::ListNode* Leetcode::reverseList(ListNode* head)
-{
-    /*方法１－迭代＊／
-    ／＊
-    if(head == nullptr){
-        return nullptr;
-    }
-    ListNode *pre = nullptr;
-    ListNode *cur = head;
-    while(cur){
-        ListNode* next = cur->next;
-        cur->next = pre;
-        pre = cur;
-        cur = next;
-    }
-    return pre;
-    */
-
-   /*方法２－递归*/
-   if(!head || !head->next) {
-       return head; //链表为空或只有一个元素返回本身
-   }
-   ListNode* p = reverseList(head->next);
-   head->next->next = head;
-   head->next = nullptr;
-   return p;
     
 }
 

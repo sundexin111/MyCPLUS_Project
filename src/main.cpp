@@ -23,11 +23,14 @@ int main(int arg_count, char *args[])
     //Baidu baidu;
 
     Leetcode leetcode;
-
     
-    Leetcode::ListNode* listA = leetcode.CreateList(3);
-    Leetcode::ListNode* listB = leetcode.CreateList(3);
-    leetcode.mergeTwoLists(listA, listB);
+    Leetcode::ListNode* listA = leetcode.CreateList(5);
+    //Leetcode::ListNode* listB = leetcode.CreateList(3);
+    leetcode.oddEvenList(listA);
+    //leetcode.splitListToParts(listA,3);
+    //leetcode.addTwoNumbers(listA, listB);
+    //leetcode.mergeTwoLists(listA, listB);
+    //leetcode.swapPairs(listA);
     //leetcode.printList(list);
     //Leetcode::ListNode* test_listnode;
     //leetcode.printListFromTailToHead1(list);
