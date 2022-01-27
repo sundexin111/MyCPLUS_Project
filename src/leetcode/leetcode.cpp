@@ -1,5 +1,41 @@
 #include "leetcode.h"
 
+void Leetcode::test()
+{
+    /****
+     *1:双指针
+     *2:数组
+     *3:链表
+     *4:栈和队列
+     *5:树
+     ****/
+    cout << "请选择要测试的数据结构或算法:"<< endl
+         << "1:双指针；"<<"2:数组"     << endl
+         << "3:链表；"  << "4:栈和队列"<< endl
+         << "5:树"     <<endl;
+    int n;
+    cin >> n;
+    switch(n){
+        case 1:
+        two_pointer_test();
+        break;
+
+        case 2:
+        break;
+
+        case 3:
+        listnode_test();
+        break;
+
+        case 4:
+        stak_que_test();
+        break;
+
+        case 5:
+        break;
+    }
+}
+
 /*****************************************数组***********************************************/
 /**************顺时针打印数组******************/
 /***题目描述：
@@ -358,6 +394,220 @@ vector<int> Leetcode::maxInWindows(const vector<int>& num, unsigned int size)
 
 
 /****************************************双指针**********************************************/
+void Leetcode::two_pointer_test()
+{
+    cout << "这是双指针的代码测试" << endl;
+    cout << "请选择测试题目：";
+    int num;//题号
+    cin >> num;
+    if(num == 1){
+        cout << "第一题(两数之和 II)测试："<< endl;
+        vector<int> numbers{1,2,3,4,5};
+        int target= 4;
+        twoSum(numbers,target);
+    }else if( num == 2){
+        cout << "第二题(两数平方和)测试："<< endl;
+        cout << "请输入测试的数：";
+        int target;
+        cin >> target;
+        if(judgeSquareSum(target)){
+            cout << target << "是两个数的平方和！"<< endl;
+        }else{
+            cout << target << "不是两个数的平方和！"<< endl;
+        }
+
+    }else if(num == 3){
+        cout << "第三题(反转字符串中的元音字母)测试："<< endl;
+    }else if(num == 4){
+        cout << "第四题(回文字符)测试："<< endl;
+        cout << "请输入要测试的字符串:";
+        string s;
+        cin >> s;
+        if(validPalindrome(s)){
+            cout << s << "是回文字符串！"<< endl;
+        }else{
+            cout << s << "不是回文字符串！"<< endl;
+        }
+    }else if(num == 5){
+        cout << "第五题(合并两个有序数组)测试："<< endl;
+        vector<int> n1{1,2,3};
+        vector<int> n2{4,5,6};
+        int m = 3;
+        int n = 3;
+        merge(n1,m,n2,n);
+    }else if(num == 6){
+        cout << "第六题(判断链表中是否存在环)测试："<< endl;
+        if(hasCycle(CreateList(5))){
+            cout << "链表中存在环"<<endl;
+        }else{
+            cout << "链表中不存在环"<<endl;
+        }
+    }else if(num == 7){
+        cout << "第七题(最长子序列)测试："<< endl;
+        cout << "请输入字符串：";
+        string s;
+        cin >> s;
+        vector<string> dictionary{"I","am", "the", "leetcode"};
+        findLongestWord(s, dictionary);
+    }
+}
+
+//1:两数之和 II - 输入有序数组
+vector<int> Leetcode::twoSum(vector<int>& numbers, int target)
+{
+    int low = 0, high = numbers.size() - 1;
+    while (low < high) {
+        int sum = numbers[low] + numbers[high];
+        if (sum == target) {
+            return {low + 1, high + 1};
+        } else if (sum < target) {
+            ++low;
+        } else {
+            --high;
+        }
+    }
+    return {-1, -1};
+}
+
+//2: 两数平方和
+bool Leetcode::judgeSquareSum(int c)
+{
+    long left = 0;
+    long right = (int)sqrt(c);
+    while (left <= right) {
+        long sum = left * left + right * right;
+        if (sum == c) {
+            return true;
+        } else if (sum > c) {
+            right--;
+        } else {
+            left++;
+        }
+    }
+    return false;
+}
+
+/*
+//3:反转字符串中的元音字母
+string Leetcode::reverseVowels(string s)
+{
+    auto isVowel = [vowels = "aeiouAEIOU"s](char ch) {
+        return vowels.find(ch) != string::npos;
+    };
+
+    int n = s.size();
+    int i = 0;
+    int j = n - 1;
+    while(i < j){
+        while(i < n && !isVowel(s[i])){
+            ++i;
+        }
+        while(j>0 && !isVowel(s[j])){
+            --j;
+        }
+        if(i < j){
+            swap(s[i],s[j]);
+            ++i;
+            --j;
+        }
+    }
+    return s;
+}
+*/
+
+//4:回文字符串
+bool Leetcode::validPalindrome(string s)
+{
+    int l = 0, r = s.size() - 1;
+    while(l < r){
+        if(s[l] == s[r]){
+            l++;
+            r--;
+        }else{
+            return isValid1(s,l+1,r) || isValid1(s,l,r-1);
+        }
+    }
+    return true;
+}
+
+//5: 合并两个有序数组
+void Leetcode::merge(vector<int>& nums1, int m, vector<int>& nums2, int n)
+{
+    int p1 = 0, p2 = 0;
+	int sorted[6];
+	int cur;
+    while (p1 < m || p2 < n) {
+		if (p1 == m) {
+			cur = nums2[p2++];
+		}
+		else if (p2 == n) {
+			cur = nums1[p1++];
+		}
+		else if (nums1[p1] < nums2[p2]) {
+			cur = nums1[p1++];
+		}
+		else {
+			cur = nums2[p2++];
+		}
+			sorted[p1 + p2 - 1] = cur;
+		}
+		for (int i = 0; i < 6; i++) {
+			nums1[i] = sorted[i];
+		}
+}
+bool Leetcode::isValid1(string s, int l, int r)
+{
+    while(l<r){
+        if(s[l] == s[r]){
+            l++;
+            r--;
+        }else{
+            return false;
+        }
+    }
+    return true;
+}
+
+//6:判断链表中是否存在环
+bool Leetcode::hasCycle(ListNode *head){
+    if(!head){
+            return false;
+        }
+        struct ListNode *ptr1, *ptr2 = head->next;
+        while(ptr1 && ptr2){
+            if(ptr1 == ptr2){
+                return true;
+            }
+            ptr1 = ptr1->next;
+            ptr2 = ptr2->next;
+            if(!ptr2) break;
+            ptr2 = ptr2->next;
+        }
+        return false;
+}
+
+//7:最长子序列
+string Leetcode::findLongestWord(string s, vector<string>& dictionary)
+{
+    string ans;
+    for (string d:dictionary){
+        int j = 0;
+        for(int i = 0; i < s.size() && j < d.size(); i++){
+            if(d[j] == s[i]){
+                j++;
+            }
+        }
+        if(j == d.size()){
+            if(d.size() > ans.size()){
+                ans = d;
+            }else if(d.size() == ans.size()){
+                ans = d < ans?d:ans;
+            }
+        }
+    }
+    return ans;
+}
+
 /***************************和为s的两个数***********************************/
 /***题目描述
  * 在有序数组中找出两个数，使得和为给定的数 S。
@@ -499,50 +749,107 @@ string Leetcode::LeftRotateString2(string str, int n)
     }
     return str.substr(n) + str.substr(0, n);
 }
-
-//6:判断链表中是否存在环
-bool Leetcode::hasCycle(ListNode *head){
-    if(!head){
-            return false;
-        }
-        struct ListNode *ptr1, *ptr2 = head->next;
-        while(ptr1 && ptr2){
-            if(ptr1 == ptr2){
-                return true;
-            }
-            ptr1 = ptr1->next;
-            ptr2 = ptr2->next;
-            if(!ptr2) break;
-            ptr2 = ptr2->next;
-        }
-        return false;
-}
-
-//7:最长子序列
-string Leetcode::findLongestWord(string s, vector<string>& dictionary)
-{
-    string ans;
-    for (string d:dictionary){
-        int j = 0;
-        for(int i = 0; i < s.size() && j < d.size(); i++){
-            if(d[j] == s[i]){
-                j++;
-            }
-        }
-        if(j == d.size()){
-            if(d.size() > ans.size()){
-                ans = d;
-            }else if(d.size() == ans.size()){
-                ans = d < ans?d:ans;
-            }
-        }
-    }
-    return ans;
-}
 /****************************************双指针**********************************************/
 
 
 /****************************************链表***********************************************/
+//链表测试
+void Leetcode::listnode_test()
+{
+    Leetcode leetcode;
+    cout << "这是链表的代码测试" << endl;
+    cout << "请选择测试题目：";
+    int num;//题号
+    cin >> num;
+    switch (num){
+        case 1:
+        cout << "第一题(寻找两个链表的交点)测试："<< endl;
+        printList(getIntersectionNode(CreateList(5),CreateList(5)));
+        break;
+
+        case 2:
+        cout << "第二题(反转链表)测试："<< endl;
+        printList(reverseList(CreateList(5)));
+        break;
+
+        case 3:
+        cout << "第三题(合并两个有序链表)测试："<< endl;
+        printList(mergeTwoLists(CreateList(5),CreateList(5)));
+        break;
+
+        case 4:
+        cout << "第四题(删除排序链表中的重复元素)测试："<< endl;
+        printList(CreateList(5));
+        break;
+
+        case 5:
+        cout << "第五题(删除链表的倒数第n个节点)测试："<< endl;
+        cout << "请输入元素n:";
+        int n;
+        cin >> n;
+        cout << endl;
+        printList(removeNthFromEnd(CreateList(5),3));
+        break;
+
+        case 6:
+        cout << "第六题(两两交换链表中的节点)测试："<< endl;
+        printList(swapPairs(CreateList(4)));
+        break;
+
+        case 7:
+        cout << "第七题(链表求和)测试："<< endl;
+        printList(addTwoNumbers(CreateList(3), CreateList(4)));
+        break;
+
+        case 8:
+        cout << "第八题测试："<< endl;
+        if(isPalindrome(CreateList(5))){
+            cout << "此链表是回文链表"<<endl;
+        }else{
+            cout << "此链表不是回文链表"<<endl;
+        }
+        break;
+
+        case 9:
+        cout << "第九题(分隔链表)测试："<< endl;
+        cout << "请输入想把链表分割的部分" << endl;
+        int k;
+        cin >> k;
+        splitListToParts(CreateList(5), k);
+        break;
+
+        case 10:
+        cout << "第十题(奇偶链表)测试："<< endl;
+        printList(oddEvenList(CreateList(5)));
+        break;
+
+        case 11:
+        cout << "第十一题(链表排序冒泡法)测试："<< endl;
+        Lsort(CreateList(5));
+        break;
+
+        case 12:
+        cout << "第十二题(链表中倒数最后k个结点)测试："<< endl;
+        cout << "请输入节点k";
+        int k1;
+        cin >> k;
+        printList(FindKthToTail(CreateList(5), k1));
+        break;
+
+        case 13:
+        cout << "第十三题(从尾到头打印链表)测试："<< endl;
+        cout << "请输入选择方法几？";
+        int method;
+        cin >> method;
+        if(method == 1){
+            printListFromTailToHead(CreateList(5));
+        }else if(method == 2){
+            printListFromTailToHead1(CreateList(5));
+        }
+        break;
+    }
+}
+
 //基础：创建和打印链表
 Leetcode::ListNode* Leetcode::CreateList(int count)
 {
@@ -914,6 +1221,133 @@ vector<int> Leetcode::printListFromTailToHead1(ListNode* head)
 }
 /****************************************链表***********************************************/
 
+/****************************************栈和队列***********************************************/
+//栈和队列测试
+void Leetcode::stak_que_test()
+{
+    cout << "这是栈和队列的代码测试" << endl;
+    cout << "请选择测试题目：";
+    int num;//题号
+    cin >> num;
+    switch (num){
+        case 1:
+        cout << "第一题(用栈实现队列)测试："<< endl;
+        /*
+        myqueue1.push(1);
+        myqueue1.push(2);
+        myqueue1.push(5);
+        myqueue1.peek();
+        myqueue1.pop();
+        myqueue1.empty();
+        */
+        break;
+
+        case 2:
+        cout << "第二题(用队列实现栈)测试："<< endl;
+        /*
+        mystack1.push(1);
+        mystack1.push(2);
+        mystack1.push(5);
+        mystack1.pop();
+        mystack1.top();
+        */
+        break;
+
+        case 3:
+        cout << "第三题(最小栈)测试："<< endl;
+        MinStack minstack;
+        minstack.push(-2);
+        minstack.push(0);
+        minstack.push(-3);
+        minstack.getMin();
+        minstack.pop();
+        minstack.top();
+        minstack.getMin();
+        break;
+
+        cout << "第四题(有效的括号)测试："<< endl;
+        string s = {"{()}"};
+        if(isValid(s)){
+            cout << "闭合"<<endl;
+        }else{
+            cout << "不闭合"<<endl;
+        }
+        break;
+
+        cout << "第五题(每日温度)测试："<< endl;
+        vector<int> temperatures{73,74,75,71,69,72,76,73};
+        dailyTemperatures(temperatures);
+        break;
+
+        cout << "第六题(下一个更大元素)测试："<< endl;
+        vector<int> nums{1,2,1};
+        nextGreaterElements(nums);
+        break;
+
+    }
+}
+
+//４:有效的括号
+bool Leetcode::isValid(string s)
+{
+    int n = s.size();
+    //基数不会闭合
+    if(n % 2 == 1){
+        return false;
+    }
+
+    unordered_map<char,char> pairs = {
+        {')', '('},
+        {']', '['},
+        {'}', '{'}
+    };
+    stack<char> stk;
+    for(char ch:s){
+        if(pairs.count(ch)){
+            if(stk.empty() || stk.top() != pairs[ch]){
+                return false;
+            }
+            stk.pop();
+        }else{
+            stk.push(ch);
+        }
+    }
+    return stk.empty();
+}
+
+//5:每日温度
+vector<int> Leetcode::dailyTemperatures(vector<int>& temperatures)
+{
+    int n = temperatures.size();
+    vector<int> ans(n);
+    stack<int> s;
+    for(int i = 0; i < n; ++i){
+        while(!s.empty() && temperatures[i] > temperatures[s.top()]){
+            int previousIndex = s.top();
+            ans[previousIndex] = i - previousIndex;
+            s.pop();
+        }
+        s.push(i);
+    }
+    return ans;
+}
+
+//6:下一个更大元素
+vector<int> Leetcode::nextGreaterElements(vector<int>& nums)
+{
+    int n = nums.size();
+    vector<int> ret(n,-1);
+    stack<int> stk;
+    for(int i = 0; i < n * 2 - 1; i++){
+        while(!stk.empty() && nums[stk.top()] < nums[i % n]){
+            ret[stk.top()] = nums[i % n];
+            stk.pop();
+        }
+        stk.push(i % n);
+    }
+    return ret;
+}
+/****************************************栈和队列***********************************************/
 
 /****************************************树***********************************************/
 
@@ -942,6 +1376,26 @@ vector<int> Leetcode::printListFromTailToHead1(ListNode* head)
 ***/
 
 /****************************************树***********************************************/
+void Leetcode::tree_test()
+{
+    /*树的测试*/
+    //Leetcode::TreeNode* root = nullptr;
+    //int a = 5;
+    //leetcode.CreateTree(root, a);
+    //建立一颗二叉树先序
+    //Leetcode::BiTree T;
+    //leetcode.houxubianli();
+    //leetcode.CreateBiTree(T);
+    //cout << "二叉树创建完成！"<<endl;
+    //cout << "先序遍历二叉树为"<<endl;
+    //leetcode.PreTraverse(T);
+    //cout << leetcode.maxDepth(T) << endl;
+
+    //遍历二叉树
+    //string s = "abpcplea";
+    //vector <string> d{"ale","apple","monkey","cplea"};
+    //leetcode.findLongestWord(s,d);
+}
 
 int Leetcode::findShortestSubArray(vector<int>& nums)
 {
@@ -1111,4 +1565,32 @@ int MyStack::top()
 bool MyStack::empty()
 {
     return queue1.empty();
+}
+
+//3:最小栈
+MinStack::MinStack()
+{
+    min_stack.push(INT_MAX);
+}
+
+void MinStack::push(int val) 
+{
+    x_stack.push(val);
+    min_stack.push(min(min_stack.top(),val));
+}
+    
+void MinStack::pop()
+{
+    x_stack.pop();
+    min_stack.pop();
+}
+    
+int MinStack::top() 
+{
+    return x_stack.top();
+}
+    
+int MinStack::getMin()
+{
+    return min_stack.top();
 }

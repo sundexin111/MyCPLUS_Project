@@ -32,6 +32,9 @@ public:
             val(x), next(NULL){
             }
     };
+    
+    //导航：选择要测试的数据结构
+    void test();
 
     /*************************************************数组****************************************************/
     void print_C_array(int lx, int ly, int rx, int ry, vector<vector<int> > &matrix, vector<int> ret);
@@ -69,6 +72,31 @@ public:
 
 
     /****************************************双指针**********************************************/
+    //双指针测试
+    void two_pointer_test();
+
+    //1:两数之和 II - 输入有序数组
+    vector<int> twoSum(vector<int>& numbers, int target);
+
+    //2:两数平方和
+    bool judgeSquareSum(int c);
+
+    //3:反转字符串中的元音字母
+    string reverseVowels(string s);
+
+    //4:回文字符串
+    bool validPalindrome(string s);
+    bool isValid1(string s, int l, int r);
+
+    //5:合并两个有序数组
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n);
+
+    //6:判断链表中是否存在环
+    bool hasCycle(ListNode *head);
+
+    //7:最长子序列
+    string findLongestWord(string s, vector<string>& dictionary);
+
     vector<int> FindNumberswithsum(vector<int> array, int sum);
 
     vector<vector<int> > FindContinuousSequence(int sum);
@@ -78,16 +106,12 @@ public:
     string LeftRotateString1(string str, int n);
     string LeftRotateString2(string str, int n);
 
-    //6:判断链表中是否存在环
-    bool hasCycle(ListNode *head);
-
-    //7:最长子序列
-    string findLongestWord(string s, vector<string>& dictionary);
-
     /****************************************双指针**********************************************/
 
    
     /****************************************链表***********************************************/
+    //链表测试
+    void listnode_test();
     //基础：创建个打印链表
     ListNode* CreateList(int count);
     void printList(ListNode* pHead);
@@ -139,7 +163,21 @@ public:
     int findShortestSubArray(vector<int>& nums);
 
     void hash_test(int is_in);
+    /*************************************栈和队列*******************************************/
+    //栈和队列测试
+    void stak_que_test();
+
+    //４:有效的括号
+    bool isValid(string s);
+
+    //5:每日温度
+    vector<int> dailyTemperatures(vector<int>& temperatures);
+
+    //6:下一个更大元素
+    vector<int> nextGreaterElements(vector<int>& nums);
     /****************************************树*******************************************/
+    //树的测试
+    void tree_test();
     struct TreeNode{
         int val;
         TreeNode *left;
@@ -181,9 +219,13 @@ private:
     unordered_map<char, int> mp;
 
     vector<int> ans;
+
+    //MyQueue myqueue;
+    //MyStack mystack;
 };
 
 /***************************栈和队列*************************/
+//1:用栈实现队列
 class MyQueue{
 public:
     MyQueue(){};
@@ -203,6 +245,7 @@ private:
 
 };
 
+//2:用队列实现栈
 class MyStack{
 public:
     MyStack(){}
@@ -217,6 +260,19 @@ public:
 
 private:
     queue<int> queue1, queue2;
+};
+
+//3:最小栈
+class MinStack {
+public:
+    MinStack(); 
+    void push(int val);
+    void pop();
+    int top();
+    int getMin();
+private:
+    stack<int> x_stack;
+    stack<int> min_stack;
 };
 
 #endif
