@@ -32,6 +32,7 @@ void Leetcode::test()
         break;
 
         case 5:
+        tree_test();
         break;
     }
 }
@@ -1379,17 +1380,28 @@ vector<int> Leetcode::nextGreaterElements(vector<int>& nums)
 void Leetcode::tree_test()
 {
     /*树的测试*/
-    //Leetcode::TreeNode* root = nullptr;
-    //int a = 5;
-    //leetcode.CreateTree(root, a);
+    cout << "这是树的代码测试" << endl;
+    cout << "请选择测试题目：";
+    int num;//题号
+    cin >> num;
     //建立一颗二叉树先序
-    //Leetcode::BiTree T;
-    //leetcode.houxubianli();
-    //leetcode.CreateBiTree(T);
-    //cout << "二叉树创建完成！"<<endl;
-    //cout << "先序遍历二叉树为"<<endl;
-    //leetcode.PreTraverse(T);
-    //cout << leetcode.maxDepth(T) << endl;
+    BiTree T;
+    CreateBiTree(T);
+    switch (num){
+        case 1:
+        cout << "第一题(树的深度)测试："<< endl;
+        cout << "此树的深度为："<<maxDepth(T) << endl;
+        break;
+
+        case 2:
+        cout << "第一题(平衡二叉树)测试："<< endl;
+        if(isBalanced(T)){
+            cout << "此树是平衡二叉树！"<<endl;
+        }else{
+            cout << "此树不是平衡二叉树！"<<endl;
+        }
+
+    }
 
     //遍历二叉树
     //string s = "abpcplea";
@@ -1428,7 +1440,6 @@ void Leetcode::hash_test(int is_in)
     }
 
     //检测某个数是否在哈希表中
-
     if(hash.count(is_in)){
         cout << is_in << "在哈希表中！" << endl;
     }else{
@@ -1442,31 +1453,6 @@ void Leetcode::hash_test(int is_in)
     }
     */
     
-}
-
-/*创建一棵树*/
-/*
-Leetcode::TreeNode*  Leetcode::CreateTree(TreeNode* root, int val)
-{
-    if(root == NULL){
-        root->val = val;
-        return root;
-    }
-    if(val < root->val){
-        root->left = CreateTree(root->left,val);
-    }else if(val > root->val){
-        root->right = CreateTree(root->right, val);
-    }
-    return root;
-}
-
-int Leetcode::maxDepth(TreeNode* root)
-{
-    //深度优先法
-    if(root == nullptr){
-        return 0;
-    }
-    return max(maxDepth(root->left),maxDepth(root->right)) + 1;
 }
 
 void Leetcode::CreateBiTree(BiTree &BT)
@@ -1491,13 +1477,27 @@ void Leetcode::PreTraverse(BiTree T)
     }
 }
 
-void Leetcode:: houxubianli()
+//1:树的深度
+int Leetcode::maxDepth(BiTree root)
 {
-
+    //深度优先法
+    if(root == nullptr){
+        return 0;
+    }
+    int left  = maxDepth(root->lchild);
+    int right = maxDepth(root->rchild);
+    return max(left,right) + 1;
 }
-*/
 
-
+//2:平衡二叉树
+bool Leetcode::isBalanced(BiTree root)
+{
+    if(root == NULL){
+        return true;
+    }else{
+        return abs(maxDepth(root->lchild) - maxDepth(root->rchild)) <= 1 && isBalanced(root->lchild) && isBalanced(root->rchild);
+    }
+}
 /**********************************栈和队列*****************************************/
 
 /***用栈实现队列***/

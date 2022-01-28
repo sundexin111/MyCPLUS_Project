@@ -178,6 +178,7 @@ public:
     /****************************************树*******************************************/
     //树的测试
     void tree_test();
+    /*
     struct TreeNode{
         int val;
         TreeNode *left;
@@ -186,10 +187,8 @@ public:
         TreeNode(int x) : val(x),left(nullptr),right(nullptr){}
         TreeNode(int x, TreeNode *left, TreeNode *right)  : val(x),left(left),right(right){}
     };
+    */
 
-    /*创建一个树*/
-    //TreeNode* CreateTree(TreeNode* root, int val);
-    /*求树的最大深度*/
     typedef struct node//节点定义
     {
         struct node *lchild;
@@ -202,9 +201,11 @@ public:
 
     void PreTraverse(BiTree T); //遍历树
 
-    int maxDepth(BiTree* root);
+    //1:树的深度
+    int maxDepth(BiTree root);
 
-    static void houxubianli();
+    //2:平衡二叉树
+    bool isBalanced(BiTree root);
 
 protected:
 
