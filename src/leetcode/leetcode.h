@@ -198,6 +198,7 @@ public:
     int sub = -1;
 
     void CreateBiTree(BiTree &BT); //创建树
+    void CreateBiTree1(BiTree &BT); //创建树
 
     void PreTraverse(BiTree T); //遍历树
 
@@ -206,6 +207,17 @@ public:
 
     //2:平衡二叉树
     bool isBalanced(BiTree root);
+
+    //3:二叉树的直径
+    int diameterOfBinaryTree(BiTree root);
+    int depth(BiTree root);
+    int ans1;
+
+    //4:翻转二叉树
+    BiTree invertTree(BiTree root);
+
+    //5:合并二叉树
+    BiTree mergeTrees(BiTree root1, BiTree root2);
 
 protected:
 

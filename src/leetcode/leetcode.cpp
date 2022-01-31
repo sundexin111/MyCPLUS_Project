@@ -1386,7 +1386,9 @@ void Leetcode::tree_test()
     cin >> num;
     //建立一颗二叉树先序
     BiTree T;
+    BiTree T2;
     CreateBiTree(T);
+    CreateBiTree(T2);
     switch (num){
         case 1:
         cout << "第一题(树的深度)测试："<< endl;
@@ -1400,6 +1402,21 @@ void Leetcode::tree_test()
         }else{
             cout << "此树不是平衡二叉树！"<<endl;
         }
+        break;
+
+        case 3:
+        cout << "第三题(二叉树的直径)测试："<< endl;
+        cout << "二叉树的直径为："<<diameterOfBinaryTree(T)<<endl;
+        break;
+
+        case 4:
+        cout << "第四题(翻转二叉树)测试："<< endl;
+        invertTree(T);
+        break;
+
+        case 5:
+        cout << "第五题(合并二叉树)测试："<< endl;
+        mergeTrees(T, T2);
 
     }
 
@@ -1457,7 +1474,20 @@ void Leetcode::hash_test(int is_in)
 
 void Leetcode::CreateBiTree(BiTree &BT)
 {
-    vector<int> tree_array{3,9,0,0,20,15,0,0,7,0,0};
+    vector<int> tree_array{1,2,4,0,0,5,0,0,3,0,0};
+    if(tree_array[++sub] == 0){
+        BT = NULL;
+    }else{
+        BT = new BiTreeNode; //新建结点
+        BT->data = tree_array[sub];
+        CreateBiTree(BT->lchild);//创建左子树
+        CreateBiTree(BT->rchild);//创建右子树
+    }
+}
+
+void Leetcode::CreateBiTree1(BiTree &BT)
+{
+    vector<int> tree_array{1,3,0,0,5,0,3,0,2};
     if(tree_array[++sub] == 0){
         BT = NULL;
     }else{
@@ -1497,6 +1527,53 @@ bool Leetcode::isBalanced(BiTree root)
     }else{
         return abs(maxDepth(root->lchild) - maxDepth(root->rchild)) <= 1 && isBalanced(root->lchild) && isBalanced(root->rchild);
     }
+}
+
+//3:二叉树的直径
+int Leetcode::diameterOfBinaryTree(BiTree root)
+{
+    ans1 = 1;
+    depth(root);
+    return ans1 - 1;
+}
+
+int Leetcode::depth(BiTree root)
+{
+    if(root==NULL){
+        return 0;
+    }
+    int left = depth(root->lchild);
+    int right = depth(root->rchild);
+    ans1 = max(ans1, left+right+1);
+    return max(left,right)+1;
+}
+
+//4:翻转二叉树
+Leetcode::BiTree Leetcode::invertTree(BiTree root)
+{
+    if(root == NULL){
+        return NULL;
+    }
+    BiTree left = invertTree(root->lchild);
+    BiTree right = invertTree(root->rchild);
+    root->lchild = right;
+    root->rchild = left;
+    return root;
+}
+
+//5:合并二叉树
+Leetcode::BiTree Leetcode::mergeTrees(BiTree root1, BiTree root2)
+{
+    if(root1 == nullptr){
+        return root2;
+    }
+    if(root2 == nullptr){
+        return root1;
+        }
+    //auto merged = new BiTree(root1->data + root2->data);
+    //merged->left = mergeTrees(root1->lchild, root2->lchild);
+    //merged->right = mergeTrees(root1->rchild, root2->rchild);
+    return root1;
 }
 /**********************************栈和队列*****************************************/
 
